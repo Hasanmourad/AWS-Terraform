@@ -74,3 +74,17 @@ spec:
           image: nginx:1.29.3
           ports:
             - containerPort: 443
+          volumeMounts:
+            - name: nginx-config
+              mountPath: /etc/nginx/nginx.conf
+              subPath: nginx.conf
+            - name: nginx-config
+              mountPath: /etc/nginx/ssl/cert.pem
+              subPath: cert.pem
+            - name: nginx-config
+              mountPath: /etc/nginx/ssl/key.pem
+              subPath: key.pem
+
+      volumes:
+        - name: nginx-config
+          emptyDir: {}
