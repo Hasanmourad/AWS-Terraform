@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: db01
+  name: db01
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: db01
+  strategy:
+    type: Recreate
+
+  template:
+    metadata:
+      labels:
+        app: db01
+    spec:
+      containers:
+        - image: mysql:8
+          name: mysql
+          ports:
+            - name: mysql
+              containerPort: 3306
+          env:
+            - name: MYSQL_DATABASE
+              valueFrom:
+                secretKeyRef:
+                  name: db-secret
+                  key: MYSQL_DATABASE
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: db-secret
+                  key: MYSQL_ROOT_PASSWORD
+          volumeMounts:
+            - mountPath: "/var/lib/mysql"
+              name: db01-claim
+
+      volumes:
+        - name: db01-claim
+          persistentVolumeClaim:
+            claimName: db01-pvc
