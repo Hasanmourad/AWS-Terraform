@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: app01
+  name: app01
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: app01
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: app01
+    spec:
+      containers:
+        - image: ahmedheggy/vprofile:v1.1
+          name: vprofile
+          env:
+            - name: MYSQL_URL
+              valueFrom:
+                secretKeyRef:
+                  name: app-secret
+                  key: MYSQL_URL
+          ports:
+            - name: app
+              containerPort: 8080
