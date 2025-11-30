@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: mc01
+  name: mc01
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mc01
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: mc01
+    spec:
+      containers:
+        - image: memcached
+          name: memcached
+          ports:
+            - name: memcached
+              containerPort: 11211
