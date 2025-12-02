@@ -19,7 +19,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: EFE-Capstone-Src
+        working-directory: sourcecodeseniorwr
 
     steps:
       - name: Checkout source code
@@ -45,14 +45,14 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: tomcat-war-package
-          path: EFE-Capstone-Src/target/*.war
+          path: sourcecodeseniorwr/target/*.war
 
       # SECURITY SCAN with Trivy
       - name: Run Trivy Vulnerability Scan on Artifact
         uses: aquasecurity/trivy-action@0.20.0
         with:
           scan-type: fs
-          scan-ref: EFE-Capstone-Src/target
+          scan-ref: sourcecodeseniorwr/target
           vuln-type: os,library
           severity: CRITICAL
           exit-code: 1
