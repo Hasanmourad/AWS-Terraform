@@ -51,11 +51,13 @@ jobs:
       - name: Run Trivy Vulnerability Scan on Artifact
         uses: aquasecurity/trivy-action@0.20.0
         with:
-          scan-type: "fs"
-          path: EFE-Capstone-Src/target/
-          severity: "HIGH,CRITICAL"
-          exit-code: "1"
+          scan-type: fs
+          input: EFE-Capstone-Src/target
+          vuln-type: os,library
+          severity: HIGH,CRITICAL
+          exit-code: 1
           ignore-unfixed: true
+
       # Build Docker Image for Tomcat App
       - name: Build Docker Image
         run: docker build -t tomcat-app .
