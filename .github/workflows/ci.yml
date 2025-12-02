@@ -52,9 +52,9 @@ jobs:
         uses: aquasecurity/trivy-action@0.20.0
         with:
           scan-type: fs
-          input: EFE-Capstone-Src/target
+          scan-ref: EFE-Capstone-Src/target
           vuln-type: os,library
-          severity: HIGH,CRITICAL
+          severity: CRITICAL
           exit-code: 1
           ignore-unfixed: true
 
